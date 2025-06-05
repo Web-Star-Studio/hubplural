@@ -1,15 +1,24 @@
 import { Header } from "@/components/layout/Header"; // Assuming @ is configured for src path
 import HeroSection from "@/components/custom/HeroSection";
+import { cityData, City } from "@/data/cityData"; // CategoryImage type might not be needed here anymore
+import CategoryImageViewer from "@/components/custom/CategoryImageViewer"; // Import the new component
+import ImageCarouselSection from "@/components/custom/ImageCarouselSection";
+// import InfiniteHorizontalGallery from "@/components/custom/InfiniteHorizontalGallery"; // Old import
+import InfiniteMasonryGallery from "@/components/custom/InfiniteMasonryGallery"; // New import
+import ProjectGallery from "@/components/custom/ProjectGallery"; // Added import
+import TestimonialsSection from "@/components/custom/TestimonialsSection";
+import ServicesSection from "@/components/custom/ServicesSection"; // Added import
+import MapboxSection from "@/components/custom/MapboxSection"; // Added import
 
 export default function HomePage() {
   return (
     <main className="relative">
       <Header />
       <HeroSection />
-      {/* 
-        The Header is absolutely positioned and will overlay the HeroSection.
-        HeroSection creates its own full-screen context.
-      */}
+      <ServicesSection />
+      <ProjectGallery />
+      <TestimonialsSection />
+      <MapboxSection />
     </main>
   );
 }

@@ -127,3 +127,53 @@
   }
 }
 */
+
+/* Scrollbar Hide utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Embla Carousel Styles - Vertical Layout */
+.embla {
+  overflow: hidden;
+  max-width: 100%;
+  height: 100%;
+}
+
+.embla__viewport {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.embla__container {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  height: 100%;
+}
+
+.embla__slide {
+  position: relative;
+  min-height: 0;
+  flex: 0 0 auto;
+}
+
+.embla__slide__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1f1f1f;
+  transition: all 0.3s ease-out;
+  transform-origin: center;
+}
+
+/* Remove the old responsive sizing as we're using a fixed vertical layout */

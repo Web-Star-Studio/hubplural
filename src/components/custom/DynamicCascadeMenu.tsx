@@ -199,7 +199,7 @@ const DynamicCascadeMenu: React.FC<DynamicCascadeMenuProps> = ({ isOpen, onClose
                       href={item.href}
                       onClick={handleLinkClick}
                       className="block text-4xl font-medium tracking-wider text-white uppercase md:text-5xl lg:text-6xl hover:text-neutral-300 transition-colors duration-200"
-                    >
+                      >
                       {item.name}
                     </Link>
                   </motion.li>

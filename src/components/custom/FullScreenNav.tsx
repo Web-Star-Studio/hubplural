@@ -16,7 +16,7 @@ interface FullScreenNavProps {
   }>;
 }
 
-const ANIMATION_DURATION = 300; // ms - This constant is for JS logic timing
+const ANIMATION_DURATION = 600; // ms - Increased for smoother animation
 
 const FullScreenNav: React.FC<FullScreenNavProps> = ({
   isOpen,
@@ -34,7 +34,7 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
       setHoveredItemImage(defaultImageSrc); // Ensure default image is set when menu opens
       const timer = setTimeout(() => {
         setAnimateIn(true);
-      }, 10);
+      }, 50); // Slight delay for smoother entrance
       return () => clearTimeout(timer);
     } else {
       setAnimateIn(false);
@@ -45,19 +45,32 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
     }
   }, [isOpen, defaultImageSrc]); // Added defaultImageSrc to dependency array
 
+  // Handle body scroll lock
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   if (!isMounted) {
     return null;
   }
 
   return (
     <div
-      className={`fixed inset-0 flex z-50 font-['Inter',_sans-serif] transition-opacity duration-300 ease-in-out ${
+      className={`fixed inset-0 flex z-50 font-['Inter',_sans-serif] transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
         animateIn ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      {/* Left Side: Image Display */}
+      {/* Left Side: Image Display - Hidden on mobile, takes half width on md+ */}
       <div
-        className={`w-1/2 h-full bg-gray-200 relative transition-transform duration-300 ease-in-out ${
+        className={`hidden md:block md:w-1/2 h-full bg-gray-200 relative transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
           animateIn ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -68,25 +81,29 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
             src={hoveredItemImage}
             alt="Menu item visual"
             fill={true}
-            className="object-cover transition-opacity duration-300 ease-in-out"
+            className="object-cover transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           />
         )}
       </div>
 
-      {/* Right Side: Menu Items & Controls */}
+      {/* Right Side: Menu Items & Controls - Full width on mobile, half width on md+ */}
       <div
-        className={`w-1/2 h-full bg-[#F0EBE3] p-8 md:p-16 flex flex-col overflow-y-auto transition-transform duration-300 ease-in-out ${
+        className={`w-full md:w-1/2 h-full bg-white p-6 sm:p-8 md:p-16 flex flex-col overflow-y-auto transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
           animateIn ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Top Section: MENU title and Close Button */}
-        <div className="flex justify-between items-center mb-12 md:mb-20">
-          <h1 className="text-6xl md:text-8xl font-bold text-black uppercase" style={{ WebkitTextStroke: '1px black', color: 'transparent' }}>
+        <div className={`flex justify-between items-center mb-8 sm:mb-12 md:mb-20 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}
+        style={{ transitionDelay: animateIn ? '200ms' : '0ms' }}
+        >
+          <h1 className="text-5xl sm:text-6xl md:text-8xl font-bold text-black uppercase" style={{ WebkitTextStroke: '1px black', color: 'transparent' }}>
             MENU
           </h1>
           <button
             onClick={onClose}
-            className="text-black text-sm font-medium hover:text-gray-700 transition-colors flex items-center space-x-2"
+            className="text-black text-sm font-medium hover:text-gray-700 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-110 flex items-center space-x-2"
             aria-label="Close menu"
           >
             <span>CLOSE</span>
@@ -102,12 +119,15 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
                 key={item.id}
                 onMouseEnter={() => setHoveredItemImage(item.imageSrc)}
                 onMouseLeave={() => setHoveredItemImage(defaultImageSrc)} // Set back to default image
-                className={`border-t border-neutral-400 py-4 ${index === 0 ? 'border-t-0 pt-0' : ''} ${index === menuItems.length -1 ? 'border-b border-neutral-400' : ''}`}
+                className={`border-t border-neutral-400 py-3 sm:py-4 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                  animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                } ${index === 0 ? 'border-t-0 pt-0' : ''} ${index === menuItems.length -1 ? 'border-b border-neutral-400' : ''}`}
+                style={{ transitionDelay: animateIn ? `${300 + (index * 100)}ms` : '0ms' }}
               >
-                <Link href={item.href} legacyBehavior>
-                  <a className="text-3xl md:text-4xl font-bold text-black uppercase hover:underline">
+                <Link href={item.href}>
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-black uppercase hover:underline transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:translate-x-2 hover:text-gray-700 block">
                     {item.label}
-                  </a>
+                  </span>
                 </Link>
               </li>
             ))}

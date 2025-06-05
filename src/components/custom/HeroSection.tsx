@@ -1,5 +1,4 @@
 import { Dot, Mouse } from 'lucide-react';
-import Image from 'next/image';
 
 const ScrollDownIcon = () => (
   <div className="flex flex-col items-center space-y-2">
@@ -17,19 +16,22 @@ const ArrowIcon = () => (
 );
 
 export default function HeroSection() {
-  const unsplashImageUrl = "https://images.unsplash.com/photo-1606836576983-8b458e75221d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-
   return (
-    <div className="relative w-full h-screen text-white">
-      <Image
-        src={unsplashImageUrl}
-        alt="Coworking Space"
-        layout="fill"
-        objectFit="cover"
-        quality={85}
-        priority // Load image eagerly as it's LCP
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-30"></div> {/* Optional: slight overlay for text contrast if needed */}
+    <div className="relative w-full h-screen text-white overflow-hidden">
+      {/* Video Background */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+      >
+        <source src="/Vídeo_Coworking_Moderno_Gerado.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeos HTML5.
+      </video>
+      
+      <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* Overlay for better text contrast */}
 
       {/* Content container */}
       <div className="relative z-10 flex flex-col justify-between h-full p-8 md:p-16">
