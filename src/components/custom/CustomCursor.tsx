@@ -24,7 +24,7 @@ const CustomCursor = () => {
       height: 16,
       backgroundColor: 'rgba(255, 255, 255, 0.8)',
       borderRadius: '50%',
-      mixBlendMode: 'difference', 
+      mixBlendMode: 'difference' as const, 
       transition: { type: 'spring', stiffness: 500, damping: 30, mass: 0.1 },
     },
     // linkHover variant can be re-added later with more targeted logic if needed
@@ -39,4 +39,4 @@ const CustomCursor = () => {
   );
 };
 
-export default CustomCursor; 
+export default CustomCursor;
