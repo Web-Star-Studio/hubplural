@@ -7,10 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "browser-tools": "npx @agentdeskai/browser-tools-server@latest"
+    "browser-tools": "npx @agentdeskai/browser-tools-server@latest",
+    "scrape": "node scripts/scraper.js"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
+    "@types/cheerio": "^0.22.35",
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.6.0",

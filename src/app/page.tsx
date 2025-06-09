@@ -9,6 +9,10 @@ import ProjectGallery from "@/components/custom/ProjectGallery"; // Added import
 import TestimonialsSection from "@/components/custom/TestimonialsSection";
 import ServicesSection from "@/components/custom/ServicesSection"; // Added import
 import MapboxSection from "@/components/custom/MapboxSection"; // Added import
+import FiscalAddressSection from '@/components/custom/FiscalAddressSection';
+import CompaniesStatsSection from '@/components/custom/CompaniesStatsSection';
+import BlogSection from '@/components/custom/BlogSection';
+import Footer from '@/components/layout/Footer';
 
 export default function HomePage() {
   return (
@@ -18,7 +22,11 @@ export default function HomePage() {
       <ServicesSection />
       <ProjectGallery />
       <TestimonialsSection />
+      <FiscalAddressSection />
+      <CompaniesStatsSection />
+      <BlogSection />
       <MapboxSection />
+      <Footer />
     </main>
   );
 }

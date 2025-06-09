@@ -16,45 +16,45 @@ interface ProjectImage {
 const projectImages: ProjectImage[] = [
   {
     id: '1',
-    backgroundUrl: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-    centerUrl: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'MODERN ARCHITECTURE',
-    subtitle: 'CONTEMPORARY DESIGN'
+    backgroundUrl: 'https://lh3.googleusercontent.com/gg-dl/AJfQ9KTTf3psojldG9pkLxSjogqLiRJM3j0tWuTV89aZ2u4ucokssNKnR0kefUdEvyJUNjDJWKD3tRogdjruzQpXy31xWsp2xISDSgpAeCZE1-WzHat4WEBfm2ekaav05IFOBXPQf2LPKYyjL5aHawvkYEPhBqWdJGLp_vHQQ-ho5x2Lt0ebuQ=s1024',
+    centerUrl: 'https://lh3.googleusercontent.com/gg-dl/AJfQ9KRl9KlAwE9pkPECwEFkgO5NvYH0T8ZUf4K3anqINZ_LFgeg0Jv5JYsHQMqNVp4FEMbnxze6si7xw4WwpiEwYTvz2mbmTk5qfP1voYiG_4d5PnW_c0xcaDqbFDFcw1WQRJYYu3nknUyknMdm6uZ3eGO01fYlyRfG__BicKrXWXH_54bCQQ=s1024',
+    title: 'RECIFE',
+    subtitle: 'HUB PRA MIM'
   },
   {
     id: '2',
     backgroundUrl: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
     centerUrl: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'URBAN SPACES',
-    subtitle: 'CITY LANDSCAPES'
+    title: 'RECIFE',
+    subtitle: 'HUB PRA 2 OU 6'
   },
   {
     id: '3',
     backgroundUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
     centerUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'MINIMALIST DESIGN',
-    subtitle: 'CLEAN AESTHETICS'
+    title: 'RECIFE',
+    subtitle: 'HUB PRA GENTE QUE SÓ'
   },
   {
     id: '4',
     backgroundUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
     centerUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'GEOMETRIC FORMS',
-    subtitle: 'STRUCTURAL BEAUTY'
+    title: 'CARUARU',
+    subtitle: 'HUB PRA MIM'
   },
   {
     id: '5',
     backgroundUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
     centerUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'GLASS FACADES',
-    subtitle: 'TRANSPARENT ARCHITECTURE'
+    title: 'FORTALEZA',
+    subtitle: 'HUB PRA 2 OU 6'
   },
   {
     id: '6',
     backgroundUrl: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
     centerUrl: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'INDUSTRIAL ELEGANCE',
-    subtitle: 'REFINED SIMPLICITY'
+    title: 'FORTALEZA',
+    subtitle: 'HUB PRA GENTE QUE SÓ'
   }
 ];
 
@@ -142,9 +142,6 @@ const ProjectGallery: React.FC = () => {
 
       {/* Project Info */}
       <div className="absolute top-8 left-8 z-20 text-white">
-        <div className="text-sm font-light tracking-wider text-white/70 mb-2">
-          SELECTED PROJECT
-        </div>
         <motion.h2
           key={`title-${currentImage.id}`}
           initial={{ opacity: 0, y: 20 }}
@@ -211,7 +208,7 @@ const ProjectGallery: React.FC = () => {
             key={index}
             className={`h-1 transition-all duration-300 ${
               index === currentIndex 
-                ? 'w-8 bg-white' 
+                ? 'w-8 bg-accent' 
                 : 'w-4 bg-white/30 hover:bg-white/50 cursor-pointer'
             }`}
             onClick={() => setCurrentIndex(index)}

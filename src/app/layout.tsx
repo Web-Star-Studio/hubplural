@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
+import WhatsAppFloat from "@/components/custom/WhatsAppFloat";
+import { meta } from "@/data/hubPluralContent";
 
 export const metadata: Metadata = {
-  title: "Hub Plural",
-  description: "Protótipo interativo para Hub Plural",
+  title: meta.title,
+  description: meta.description,
 };
 
 export default function RootLayout({
@@ -18,7 +20,10 @@ export default function RootLayout({
       <head>
         <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <WhatsAppFloat />
+      </body>
     </html>
   );
 }

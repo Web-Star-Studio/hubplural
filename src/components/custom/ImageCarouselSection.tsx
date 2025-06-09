@@ -262,7 +262,7 @@ const ImageCarouselSection: React.FC = () => {
                       />
                       {index === selectedIndex && (
                         <motion.div
-                          className="absolute left-0 top-0 bottom-0 bg-blue-500 flex flex-col justify-center items-center overflow-hidden w-12"
+                          className="absolute left-0 top-0 bottom-0 bg-accent flex flex-col justify-center items-center overflow-hidden w-12"
                           initial={{ opacity: 0, width: 0 }}
                           animate={{ opacity: 1, width: '3rem' }}
                           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -325,7 +325,7 @@ const ImageCarouselSection: React.FC = () => {
                       onClick={() => setSelectedProjectCategory(projCategory)} // Apenas atualiza, não alterna
                       role="tab"
                       aria-selected={selectedProjectCategory === projCategory}
-                      className={`px-3 py-1 text-xs font-medium transition-all duration-200 rounded-sm ${selectedProjectCategory === projCategory ? 'bg-blue-500 text-white shadow-lg' : 'bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 hover:text-white'}`}
+                      className={`px-3 py-1 text-xs font-medium transition-all duration-200 rounded-sm ${selectedProjectCategory === projCategory ? 'bg-accent text-white shadow-lg' : 'bg-neutral-800/80 hover:bg-neutral-700 text-neutral-300 hover:text-white'}`}
                     >
                       {projCategory}
                     </button>

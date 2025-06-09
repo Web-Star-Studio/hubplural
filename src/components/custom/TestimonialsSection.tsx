@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import Image from 'next/image';
+import { testimonials as scrapedTestimonials } from '@/data/hubPluralContent';
 
 interface Testimonial {
   id: string;
@@ -15,44 +16,44 @@ interface Testimonial {
   avatar: string;
 }
 
-const testimonials: Testimonial[] = [
-  {
-    id: '1',
-    name: 'Maria Silva',
-    position: 'CEO',
-    company: 'TechStart',
-    content: 'O Hub Plural transformou completamente nossa forma de trabalhar. O ambiente é inspirador e a comunidade é fantástica. Nossa produtividade aumentou significativamente desde que nos mudamos para cá.',
-    rating: 5,
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b47c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-  },
-  {
-    id: '2',
-    name: 'João Santos',
-    position: 'Diretor de Marketing',
-    company: 'Digital Boost',
-    content: 'Mais do que um espaço de trabalho, é uma verdadeira comunidade de inovadores. As salas de reunião são perfeitas para nossos clientes e o suporte é excepcional.',
-    rating: 5,
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-  },
-  {
-    id: '3',
-    name: 'Ana Costa',
-    position: 'Fundadora',
-    company: 'CreativeHub',
-    content: 'A flexibilidade dos contratos e a qualidade da infraestrutura são incomparáveis. Conseguimos escalar nossa equipe sem nos preocupar com limitações de espaço.',
-    rating: 5,
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-  },
-  {
-    id: '4',
-    name: 'Pedro Oliveira',
-    position: 'CTO',
-    company: 'DevSolutions',
-    content: 'O networking aqui é incrível. Já fechamos três parcerias importantes apenas conversando no coffee break. O ambiente favorece a colaboração natural.',
-    rating: 5,
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-  }
+// Avatares genéricos para os depoimentos
+const genericAvatars = [
+  'https://images.unsplash.com/photo-1494790108755-2616b612b47c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
 ];
+
+// Função para extrair empresa/posição do nome do autor
+const getPositionAndCompany = (author: string) => {
+  if (author.toLowerCase().includes('gf.capital')) {
+    return { position: 'Equipe', company: 'GF.Capital' };
+  }
+  if (author.toLowerCase().includes('gestor')) {
+    return { position: 'Gestor', company: 'Hub Plural' };
+  }
+  if (author.toLowerCase().includes('empreendedor')) {
+    return { position: 'Empreendedor', company: 'Startup Local' };
+  }
+  if (author.toLowerCase().includes('ceo')) {
+    return { position: 'CEO', company: 'Tech Startup' };
+  }
+  return { position: 'Cliente', company: 'Hub Plural' };
+};
+
+const testimonials: Testimonial[] = scrapedTestimonials.map((testimonial, index) => {
+  const { position, company } = getPositionAndCompany(testimonial.author);
+  
+  return {
+    id: `testimonial-${index}`,
+    name: testimonial.author,
+    position: position,
+    company: company,
+    content: testimonial.text,
+    rating: testimonial.rating,
+    avatar: genericAvatars[index % genericAvatars.length]
+  };
+});
 
 const TestimonialsSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -246,7 +247,7 @@ const TestimonialsSection: React.FC = () => {
               className={`
                 h-2 rounded-full transition-all duration-300 
                 ${index === currentIndex 
-                  ? 'w-8 bg-black' 
+                  ? 'w-8 bg-accent' 
                   : 'w-2 bg-neutral-300 hover:bg-neutral-400'
                 }
               `}

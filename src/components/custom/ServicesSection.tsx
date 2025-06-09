@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Wifi, Coffee, Calendar, Headphones, Shield, Clock, MapPin } from 'lucide-react';
+import { Users, Wifi, Coffee, Calendar, Headphones, Shield, Clock, MapPin, Building, Package, UserCheck } from 'lucide-react';
+import { services as scrapedServices } from '@/data/hubPluralContent';
 
 interface Service {
   id: string;
@@ -12,50 +13,39 @@ interface Service {
   features: string[];
 }
 
-const services: Service[] = [
-  {
-    id: 'coworking',
-    icon: <Users className="w-8 h-8" />,
-    title: 'COWORKING SPACES',
-    description: 'Ambientes colaborativos e inspiradores para profissionais e equipes',
-    features: ['Espaços compartilhados', 'Networking', 'Ambiente produtivo', 'Comunidade ativa']
-  },
-  {
-    id: 'private-offices',
-    icon: <MapPin className="w-8 h-8" />,
-    title: 'ESCRITÓRIOS PRIVATIVOS',
-    description: 'Escritórios exclusivos com total privacidade e flexibilidade',
-    features: ['100% privativo', 'Mobília completa', 'Contratos flexíveis', 'Localização premium']
-  },
-  {
-    id: 'meeting-rooms',
-    icon: <Calendar className="w-8 h-8" />,
-    title: 'SALAS DE REUNIÃO',
-    description: 'Salas equipadas para reuniões, apresentações e eventos corporativos',
-    features: ['Tecnologia moderna', 'Capacidades variadas', 'Reserva online', 'Suporte técnico']
-  },
-  {
-    id: 'virtual-office',
-    icon: <Wifi className="w-8 h-8" />,
-    title: 'ESCRITÓRIO VIRTUAL',
-    description: 'Endereço comercial prestigioso sem os custos de um escritório físico',
-    features: ['Endereço comercial', 'Recepção de correspondência', 'Atendimento telefônico', 'Acesso eventual']
-  },
-  {
-    id: 'amenities',
-    icon: <Coffee className="w-8 h-8" />,
-    title: 'COMODIDADES',
-    description: 'Facilidades completas para seu conforto e produtividade',
-    features: ['Coffee bar premium', 'Internet alta velocidade', 'Impressão ilimitada', 'Recepção dedicada']
-  },
-  {
-    id: 'support',
-    icon: <Headphones className="w-8 h-8" />,
-    title: 'SUPORTE 24/7',
-    description: 'Atendimento completo e suporte técnico para todas as suas necessidades',
-    features: ['Suporte técnico', 'Atendimento personalizado', 'Manutenção preventiva', 'Segurança 24h']
-  }
-];
+// Mapeamento de ícones para os serviços
+const getServiceIcon = (title: string) => {
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes('coworking')) return <Users className="w-8 h-8" />;
+  if (titleLower.includes('escritório') || titleLower.includes('flexível')) return <Building className="w-8 h-8" />;
+  if (titleLower.includes('reunião') || titleLower.includes('salas')) return <Calendar className="w-8 h-8" />;
+  if (titleLower.includes('membership')) return <UserCheck className="w-8 h-8" />;
+  if (titleLower.includes('estação') || titleLower.includes('fixa')) return <MapPin className="w-8 h-8" />;
+  if (titleLower.includes('caixa') || titleLower.includes('postal')) return <Package className="w-8 h-8" />;
+  if (titleLower.includes('evento')) return <Coffee className="w-8 h-8" />;
+  return <Wifi className="w-8 h-8" />;
+};
+
+// Características para cada tipo de serviço
+const getServiceFeatures = (title: string): string[] => {
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes('coworking')) return ['Espaços compartilhados', 'Networking ativo', 'Ambiente inspirador', 'Comunidade vibrante'];
+  if (titleLower.includes('escritório') || titleLower.includes('flexível')) return ['100% privativo', 'Sem manutenção', 'Contratos flexíveis', 'Localização premium'];
+  if (titleLower.includes('reunião') || titleLower.includes('salas')) return ['Tecnologia moderna', 'Capacidades variadas', 'Reserva fácil', 'Suporte técnico'];
+  if (titleLower.includes('membership')) return ['Acesso total', 'Benefícios exclusivos', 'Networking qualificado', 'Descontos especiais'];
+  if (titleLower.includes('estação') || titleLower.includes('fixa')) return ['Espaço garantido', 'Ambiente colaborativo', 'Sempre disponível', 'Comunidade ativa'];
+  if (titleLower.includes('caixa') || titleLower.includes('postal')) return ['Endereço comercial', 'Presença profissional', 'Recepção de correspondência', 'Credibilidade'];
+  if (titleLower.includes('evento')) return ['Espaços modernos', 'Equipamentos inclusos', 'Networking', 'Suporte completo'];
+  return ['Serviço completo', 'Atendimento premium', 'Flexibilidade', 'Suporte dedicado'];
+};
+
+const services: Service[] = scrapedServices.map((service, index) => ({
+  id: `service-${index}`,
+  icon: getServiceIcon(service.title),
+  title: service.title.toUpperCase(),
+  description: service.description,
+  features: getServiceFeatures(service.title)
+}));
 
 const ServicesSection: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
@@ -92,9 +82,10 @@ const ServicesSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm font-light tracking-[0.2em] text-neutral-500 mb-4 uppercase"
+            className="text-sm font-light tracking-[0.2em] text-neutral-500 mb-4 uppercase relative inline-block"
           >
             Nossos Serviços
+            <div className="absolute -bottom-1 left-0 w-8 h-px bg-secondary"></div>
           </motion.div>
           
           <motion.h2
@@ -141,7 +132,7 @@ const ServicesSection: React.FC = () => {
               <div className={`
                 relative p-8 md:p-10 bg-white border border-neutral-200 
                 transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                hover:border-neutral-800 hover:shadow-2xl hover:-translate-y-2
+                hover:border-neutral-800 hover:shadow-2xl hover:-translate-y-2 hover:border-t-4 hover:border-t-secondary
                 ${hoveredService === service.id ? 'scale-105' : 'scale-100'}
               `}>
                 
@@ -188,7 +179,7 @@ const ServicesSection: React.FC = () => {
                     >
                       <div className={`
                         w-1.5 h-1.5 rounded-full mr-3 transition-all duration-300
-                        ${hoveredService === service.id ? 'bg-black' : 'bg-neutral-300'}
+                        ${hoveredService === service.id ? 'bg-secondary' : 'bg-neutral-300'}
                       `} />
                       {feature}
                     </motion.li>
@@ -217,10 +208,10 @@ const ServicesSection: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="
-              px-8 md:px-10 py-4 md:py-5 bg-black text-white font-medium uppercase tracking-wider
+              px-8 md:px-10 py-4 md:py-5 bg-accent text-white font-medium uppercase tracking-wider
               transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-              hover:bg-neutral-800 hover:shadow-xl border border-black
-              focus:outline-none focus:ring-2 focus:ring-neutral-800 focus:ring-offset-2
+              hover:bg-accent-800 hover:shadow-xl border border-accent
+              focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
             "
           >
             Agendar Visita

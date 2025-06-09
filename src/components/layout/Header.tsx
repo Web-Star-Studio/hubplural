@@ -7,11 +7,11 @@ import { Menu as MenuIcon } from 'lucide-react'; // Renamed to avoid conflict if
 import FullScreenNav from '@/components/custom/FullScreenNav'; // New menu
 
 const MOCK_FULL_SCREEN_NAV_ITEMS = [
-  { id: 'home', label: 'HOME', href: '#', imageSrc: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80' },
-  { id: 'sobre', label: 'SOBRE', href: '#', imageSrc: 'https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80' },
-  { id: 'blog', label: 'BLOG', href: '#', imageSrc: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80' },
-  { id: 'localizacao', label: 'LOCALIZAÇÃO', href: '#', imageSrc: 'https://images.unsplash.com/photo-1504829857779-6274fd28919e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80' },
-  { id: 'contato', label: 'CONTATO', href: '#', imageSrc: 'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80' },
+  { id: 'home', label: 'HOME', href: '/', imageSrc: 'https://hubplural.com/wp-content/uploads/2025/05/Captura-de-tela-2025-05-09-220312.png' },
+  { id: 'sobre', label: 'SOBRE', href: '/sobre', imageSrc: 'https://hubplural.com/wp-content/uploads/2024/07/HOME-SALA-DE-REUNIAO-03.png' },
+  { id: 'blog', label: 'BLOG', href: '#', imageSrc: 'https://hubplural.com/wp-content/uploads/2024/07/HOME-SALA-DE-REUNIAO-01.png' },
+  { id: 'localizacao', label: 'LOCALIZAÇÃO', href: '#', imageSrc: 'https://hubplural.com/wp-content/uploads/2024/07/HOME-SALA-DE-REUNIAO-02.png' },
+  { id: 'contato', label: 'CONTATO', href: '/contato', imageSrc: 'https://hubplural.com/wp-content/uploads/2023/09/PASSAPORTE-02-1024x770.png' },
 ];
 
 const HeaderRevised = () => {
@@ -36,8 +36,8 @@ const HeaderRevised = () => {
               <Image
                 src="/hub-plural-logo-branca.png"
                 alt="Hub Plural Logo"
-                width={150}
-                height={40}
+                width={180}
+                height={48}
                 priority
               />
             </Link>
