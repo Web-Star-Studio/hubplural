@@ -255,11 +255,6 @@ function generateMockData() {
                 icon: null
             },
             {
-                title: "Membership",
-                description: "Acesso completo às facilidades do Hub com benefícios exclusivos.",
-                icon: null
-            },
-            {
                 title: "Estação Fixa",
                 description: "Sua própria estação de trabalho em ambiente colaborativo.",
                 icon: null

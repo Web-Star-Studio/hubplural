@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Loader, ArrowRight } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -14,13 +14,13 @@ interface FormData {
   interest: string;
 }
 
+// Simplified interest options
 const interestOptions = [
   'Coworking',
   'Escritório Privativo',
   'Sala de Reunião',
   'Escritório Virtual',
-  'Evento/Workshop',
-  'Consultoria',
+  'Eventos',
   'Outros'
 ];
 
@@ -28,6 +28,7 @@ export default function ContactFormSection() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,7 +71,7 @@ export default function ContactFormSection() {
 
   if (submitted) {
     return (
-      <section className="py-16 md:py-20 lg:py-24 bg-white">
+      <section id="contact-form" className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -81,25 +82,38 @@ export default function ContactFormSection() {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"
+              transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 200 }}
+              className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8"
             >
-              <CheckCircle className="w-10 h-10 text-green-600" />
+              <CheckCircle className="w-12 h-12 text-green-600" />
             </motion.div>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-black uppercase tracking-wide mb-4">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="text-4xl md:text-5xl font-bold text-black uppercase tracking-tight mb-6"
+            >
               Mensagem Enviada!
-            </h2>
+            </motion.h2>
             
-            <p className="text-neutral-600 font-light text-lg leading-relaxed mb-8">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="text-neutral-600 font-light text-xl leading-relaxed mb-10"
+            >
               Obrigado pelo seu contato! Nossa equipe retornará em até 24 horas.
-            </p>
+            </motion.p>
             
             <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSubmitted(false)}
-              className="bg-amber-400 text-black px-8 py-4 font-bold uppercase tracking-wide hover:bg-amber-300 transition-all duration-300"
+              className="bg-amber-400 text-black px-8 py-4 text-lg font-bold uppercase tracking-wide hover:bg-black hover:text-white transition-all duration-300"
             >
               Enviar Nova Mensagem
             </motion.button>
@@ -110,10 +124,10 @@ export default function ContactFormSection() {
   }
 
   return (
-    <section className="py-16 md:py-20 lg:py-24 bg-white">
+    <section id="contact-form" className="py-20 md:py-28 bg-white">
       <div className="container mx-auto px-4 md:px-8 lg:px-16">
         
-        {/* Header */}
+        {/* Elegant Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,10 +140,9 @@ export default function ContactFormSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm font-light tracking-[0.2em] text-neutral-500 mb-4 uppercase relative inline-block"
+            className="text-sm font-light tracking-[0.3em] text-neutral-500 mb-6 uppercase"
           >
             Formulário de Contato
-            <div className="absolute -bottom-1 left-0 w-8 h-px bg-amber-400"></div>
           </motion.div>
           
           <motion.h2
@@ -137,15 +150,15 @@ export default function ContactFormSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-4xl md:text-5xl font-bold text-black uppercase tracking-tight leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-black uppercase tracking-tight leading-tight"
           >
             Como Podemos
             <br />
-            <span className="text-neutral-600">Ajudar Você?</span>
+            <span className="text-amber-400">Ajudar?</span>
           </motion.h2>
         </motion.div>
 
-        {/* Form */}
+        {/* Refined Form */}
         <div className="max-w-4xl mx-auto">
           <motion.form
             initial={{ opacity: 0, y: 50 }}
@@ -158,189 +171,226 @@ export default function ContactFormSection() {
             {/* Error Message */}
             {error && (
               <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-red-50 border border-red-200 p-4 flex items-center space-x-3 text-red-700"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-red-50 border-l-4 border-red-400 p-6 flex items-center space-x-3 text-red-700"
               >
-                <AlertCircle className="w-5 h-5" />
-                <span>{error}</span>
+                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <span className="font-medium">{error}</span>
               </motion.div>
             )}
 
-            {/* Name and Email Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Essential Fields Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
+              {/* Name Field */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="space-y-2"
+                className="space-y-3"
               >
-                <label htmlFor="name" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
+                <label htmlFor="name" className="block text-sm font-medium text-neutral-700 uppercase tracking-wider">
                   Nome Completo *
                 </label>
-                <input
+                <motion.input
                   type="text"
                   id="name"
                   name="name"
                   required
                   minLength={3}
                   maxLength={100}
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white"
+                  onFocus={() => setFocusedField('name')}
+                  onBlur={() => setFocusedField(null)}
+                  className="w-full px-0 py-4 text-lg border-0 border-b-2 border-neutral-200 focus:border-amber-400 focus:outline-none transition-all duration-300 bg-transparent placeholder-neutral-400"
                   placeholder="Seu nome completo"
+                  whileFocus={{ scale: 1.01 }}
+                />
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: focusedField === 'name' ? '100%' : '0%' }}
+                  transition={{ duration: 0.3 }}
+                  className="h-0.5 bg-amber-400"
                 />
               </motion.div>
 
+              {/* Email Field */}
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="space-y-2"
+                className="space-y-3"
               >
-                <label htmlFor="email" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
+                <label htmlFor="email" className="block text-sm font-medium text-neutral-700 uppercase tracking-wider">
                   E-mail *
                 </label>
-                <input
+                <motion.input
                   type="email"
                   id="email"
                   name="email"
                   required
                   maxLength={150}
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white"
+                  onFocus={() => setFocusedField('email')}
+                  onBlur={() => setFocusedField(null)}
+                  className="w-full px-0 py-4 text-lg border-0 border-b-2 border-neutral-200 focus:border-amber-400 focus:outline-none transition-all duration-300 bg-transparent placeholder-neutral-400"
                   placeholder="seu@email.com"
+                  whileFocus={{ scale: 1.01 }}
+                />
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: focusedField === 'email' ? '100%' : '0%' }}
+                  transition={{ duration: 0.3 }}
+                  className="h-0.5 bg-amber-400"
                 />
               </motion.div>
-            </div>
 
-            {/* Phone and Company Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Phone Field */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="space-y-2"
+                className="space-y-3"
               >
-                <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
+                <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 uppercase tracking-wider">
                   Telefone
                 </label>
-                <input
+                <motion.input
                   type="tel"
                   id="phone"
                   name="phone"
                   maxLength={20}
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white"
-                  placeholder="(81) 99999-9999"
+                  onFocus={() => setFocusedField('phone')}
+                  onBlur={() => setFocusedField(null)}
+                  className="w-full px-0 py-4 text-lg border-0 border-b-2 border-neutral-200 focus:border-amber-400 focus:outline-none transition-all duration-300 bg-transparent placeholder-neutral-400"
+                  placeholder="(00) 0000-0000"
+                  whileFocus={{ scale: 1.01 }}
+                />
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: focusedField === 'phone' ? '100%' : '0%' }}
+                  transition={{ duration: 0.3 }}
+                  className="h-0.5 bg-amber-400"
                 />
               </motion.div>
 
+              {/* Interest Field */}
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="space-y-2"
+                className="space-y-3"
               >
-                <label htmlFor="company" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
-                  Empresa
+                <label htmlFor="interest" className="block text-sm font-medium text-neutral-700 uppercase tracking-wider">
+                  Interesse
                 </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  maxLength={100}
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white"
-                  placeholder="Nome da sua empresa"
+                <motion.select
+                  id="interest"
+                  name="interest"
+                  onFocus={() => setFocusedField('interest')}
+                  onBlur={() => setFocusedField(null)}
+                  className="w-full px-0 py-4 text-lg border-0 border-b-2 border-neutral-200 focus:border-amber-400 focus:outline-none transition-all duration-300 bg-transparent"
+                  whileFocus={{ scale: 1.01 }}
+                >
+                  <option value="">Selecione seu interesse</option>
+                  {interestOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </motion.select>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: focusedField === 'interest' ? '100%' : '0%' }}
+                  transition={{ duration: 0.3 }}
+                  className="h-0.5 bg-amber-400"
                 />
               </motion.div>
             </div>
 
-            {/* Interest and Subject Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Full Width Fields */}
+            <div className="space-y-8">
+              
+              {/* Subject Field */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className="space-y-2"
+                className="space-y-3"
               >
-                <label htmlFor="interest" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
-                  Interesse
-                </label>
-                <select
-                  id="interest"
-                  name="interest"
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white"
-                >
-                  <option value="">Selecione uma opção</option>
-                  {interestOptions.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="space-y-2"
-              >
-                <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
+                <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 uppercase tracking-wider">
                   Assunto *
                 </label>
-                <input
+                <motion.input
                   type="text"
                   id="subject"
                   name="subject"
                   required
+                  minLength={5}
                   maxLength={150}
-                  className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white"
-                  placeholder="Assunto da sua mensagem"
+                  onFocus={() => setFocusedField('subject')}
+                  onBlur={() => setFocusedField(null)}
+                  className="w-full px-0 py-4 text-lg border-0 border-b-2 border-neutral-200 focus:border-amber-400 focus:outline-none transition-all duration-300 bg-transparent placeholder-neutral-400"
+                  placeholder="Qual o assunto da sua mensagem?"
+                  whileFocus={{ scale: 1.01 }}
+                />
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: focusedField === 'subject' ? '100%' : '0%' }}
+                  transition={{ duration: 0.3 }}
+                  className="h-0.5 bg-amber-400"
+                />
+              </motion.div>
+
+              {/* Message Field */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+                className="space-y-3"
+              >
+                <label htmlFor="message" className="block text-sm font-medium text-neutral-700 uppercase tracking-wider">
+                  Mensagem *
+                </label>
+                <motion.textarea
+                  id="message"
+                  name="message"
+                  required
+                  minLength={10}
+                  maxLength={1000}
+                  rows={6}
+                  onFocus={() => setFocusedField('message')}
+                  onBlur={() => setFocusedField(null)}
+                  className="w-full px-0 py-4 text-lg border-0 border-b-2 border-neutral-200 focus:border-amber-400 focus:outline-none transition-all duration-300 bg-transparent placeholder-neutral-400 resize-none"
+                  placeholder="Conte-nos mais sobre o que você precisa..."
+                  whileFocus={{ scale: 1.01 }}
+                />
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: focusedField === 'message' ? '100%' : '0%' }}
+                  transition={{ duration: 0.3 }}
+                  className="h-0.5 bg-amber-400"
                 />
               </motion.div>
             </div>
-
-            {/* Message */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="space-y-2"
-            >
-              <label htmlFor="message" className="block text-sm font-medium text-neutral-700 uppercase tracking-wide">
-                Mensagem *
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={6}
-                required
-                minLength={10}
-                maxLength={1000}
-                className="w-full px-4 py-3 border border-neutral-300 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all duration-300 bg-neutral-50 focus:bg-white resize-none"
-                placeholder="Conte-nos mais sobre suas necessidades..."
-              />
-            </motion.div>
 
             {/* Submit Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 1.1 }}
-              className="text-center"
+              transition={{ duration: 0.6, delay: 1 }}
+              className="flex justify-center pt-8"
             >
               <motion.button
                 type="submit"
                 disabled={loading}
-                whileHover={{ scale: loading ? 1 : 1.05 }}
-                whileTap={{ scale: loading ? 1 : 0.95 }}
-                className="bg-amber-400 text-black px-12 py-4 font-bold uppercase tracking-wide hover:bg-amber-300 disabled:bg-neutral-400 disabled:cursor-not-allowed transition-all duration-300 flex items-center space-x-3 mx-auto"
+                whileHover={{ scale: 1.05, x: 10 }}
+                whileTap={{ scale: 0.95 }}
+                className="group bg-black text-white px-12 py-4 text-lg font-bold uppercase tracking-wide hover:bg-amber-400 hover:text-black transition-all duration-300 flex items-center space-x-4 disabled:opacity-50 disabled:hover:scale-100 disabled:hover:x-0"
               >
                 {loading ? (
                   <>
@@ -349,15 +399,11 @@ export default function ContactFormSection() {
                   </>
                 ) : (
                   <>
-                    <Send className="w-5 h-5" />
                     <span>Enviar Mensagem</span>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                   </>
                 )}
               </motion.button>
-
-              <p className="text-sm text-neutral-500 mt-4">
-                * Campos obrigatórios. Responderemos em até 24 horas.
-              </p>
             </motion.div>
           </motion.form>
         </div>

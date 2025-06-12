@@ -145,7 +145,7 @@ const ServicesSection: React.FC = () => {
                     w-16 h-16 mb-6 flex items-center justify-center rounded-full
                     transition-all duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
                     ${hoveredService === service.id 
-                      ? 'bg-black text-white' 
+                      ? 'bg-red-700 text-white' 
                       : 'bg-neutral-100 text-black group-hover:bg-black group-hover:text-white'
                     }
                   `}
@@ -195,32 +195,6 @@ const ServicesSection: React.FC = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-16 md:mt-20"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="
-              px-8 md:px-10 py-4 md:py-5 bg-accent text-white font-medium uppercase tracking-wider
-              transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-              hover:bg-accent-800 hover:shadow-xl border border-accent
-              focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
-            "
-          >
-            Agendar Visita
-          </motion.button>
-          
-          <p className="mt-4 text-sm text-neutral-500 font-light">
-            Conheça nossos espaços e descubra a solução ideal para você
-          </p>
-        </motion.div>
       </div>
 
       {/* Decorative Background Elements */}

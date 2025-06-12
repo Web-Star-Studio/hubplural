@@ -134,11 +134,11 @@ const AboutStorySection: React.FC = () => {
                     <div className="flex items-center mb-4">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
-                        className="w-12 h-12 bg-amber-400 text-white rounded-full flex items-center justify-center mr-4"
+                        className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center mr-4"
                       >
                         {item.icon}
                       </motion.div>
-                      <span className="text-3xl md:text-4xl font-bold text-amber-400">
+                      <span className="text-3xl md:text-4xl font-bold text-red-600">
                         {item.year}
                       </span>
                     </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { X, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { X, ChevronRight, MapPin, Clock, Menu } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { contact } from '@/data/hubPluralContent';
 
 interface MenuLocation {
@@ -21,36 +22,20 @@ interface FullScreenNavProps {
   }>;
 }
 
-const ANIMATION_DURATION = 600; // ms
+const ANIMATION_DURATION = 800;
 
-const RECIFE_LOCATIONS: MenuLocation[] = [
-  { id: 'aflitos', label: 'AFLITOS', href: '/localizacao/aflitos' },
-  { id: 'boa-viagem', label: 'BOA VIAGEM', href: '/localizacao/boa-viagem' },
-  { id: 'ilha-do-leite', label: 'ILHA DO LEITE', href: '/localizacao/ilha-do-leite' },
-  { id: 'recife-antigo', label: 'RECIFE ANTIGO', href: '/localizacao/recife-antigo' },
-  { id: 'varzea', label: 'VÁRZEA', href: '/localizacao/varzea' },
+// Simplified locations - only key locations
+const KEY_LOCATIONS: MenuLocation[] = [
+  { id: 'recife', label: 'Recife', href: '/localizacao/recife' },
+  { id: 'fortaleza', label: 'Fortaleza', href: '/localizacao/fortaleza' },
+  { id: 'caruaru', label: 'Caruaru', href: '/localizacao/caruaru' },
 ];
 
-const OTHER_REGIONS: MenuLocation[] = [
-  { id: 'caruaru', label: 'CARUARU', href: '/localizacao/caruaru' },
-  { id: 'fortaleza', label: 'FORTALEZA', href: '/localizacao/fortaleza' },
-  { id: 'petrolina', label: 'PETROLINA', href: '/localizacao/petrolina' },
-];
-
-const HUB_OPTIONS = [
-  'MIM',
-  '2 OU 6',
-  'GENTE QUE SÓ',
-];
-
-const MORE_OPTIONS = [
-  'CAIXA POSTAL',
-  'ESTAÇÃO FIXA', 
-  'ESCRITÓRIO FLEXÍVEL',
-  'SALAS DE REUNIÃO',
-  'MEMBERSHIP',
-  'COWORKING PLURAL',
-  'EVENTOS',
+// Simplified services - only main ones
+const KEY_SERVICES = [
+  { id: 'coworking', label: 'Coworking', href: '/servicos/coworking' },
+  { id: 'escritorios', label: 'Escritórios', href: '/servicos/escritorios' },
+  { id: 'salas', label: 'Salas de Reunião', href: '/servicos/salas' },
 ];
 
 const FullScreenNav: React.FC<FullScreenNavProps> = ({
@@ -62,6 +47,19 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
   const [hoveredItemImage, setHoveredItemImage] = useState<string>(defaultImageSrc);
   const [isMounted, setIsMounted] = useState(false);
   const [animateIn, setAnimateIn] = useState(false);
+  const [activeSection, setActiveSection] = useState<'nav' | 'services' | 'locations'>('nav');
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -73,6 +71,7 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
       return () => clearTimeout(timer);
     } else {
       setAnimateIn(false);
+      setActiveSection('nav');
       const timer = setTimeout(() => {
         setIsMounted(false);
       }, ANIMATION_DURATION);
@@ -97,205 +96,368 @@ const FullScreenNav: React.FC<FullScreenNavProps> = ({
   }
 
   return (
-    <div
-      className={`fixed inset-0 flex z-50 font-['Inter',_sans-serif] transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-        animateIn ? 'opacity-100' : 'opacity-0'
-      }`}
-    >
-      {/* Left Side: Menu Content */}
-      <div
-        className={`w-full md:w-1/2 h-full bg-black text-white p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col overflow-y-auto transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] scrollbar-none ${
-          animateIn ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        {/* Logo */}
-        <div className={`mb-8 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
-        style={{ transitionDelay: animateIn ? '100ms' : '0ms' }}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="fixed inset-0 z-50 font-['Inter',_sans-serif]"
         >
-          <Link href="/" className="inline-block">
-            <Image
-              src="/hub-plural-logo-branca.png"
-              alt="Hub Plural Logo"
-              width={200}
-              height={53}
-              priority
-            />
-          </Link>
-        </div>
-
-        {/* Hub Options Section */}
-        <div className={`mb-12 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-        style={{ transitionDelay: animateIn ? '200ms' : '0ms' }}
-        >
-          <h2 className="text-2xl md:text-3xl font-light text-secondary mb-6">
-            quero um HUB para
-          </h2>
-          <ul className="space-y-3">
-            {HUB_OPTIONS.map((option, index) => (
-              <li key={option}>
-                <Link 
-                  href="#"
-                  className="text-white text-lg font-light hover:text-secondary transition-colors duration-300 block border-b border-gray-700 pb-2"
-                >
-                  {option}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* More Options Section */}
-        <div className={`mb-12 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-        style={{ transitionDelay: animateIn ? '300ms' : '0ms' }}
-        >
-          <h2 className="text-2xl md:text-3xl font-light text-secondary mb-6">
-            e ainda mais...
-          </h2>
-          <ul className="space-y-3">
-            {MORE_OPTIONS.map((option, index) => (
-              <li key={option}>
-                <Link 
-                  href="#"
-                  className="text-white text-lg font-light hover:text-secondary transition-colors duration-300 block border-b border-gray-700 pb-2"
-                >
-                  {option}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Right Side: Navigation & Locations */}
-      <div
-        className={`w-full md:w-1/2 h-full bg-white p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col overflow-y-auto transition-all duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] scrollbar-none ${
-          animateIn ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        {/* Close Button */}
-        <div className={`flex justify-end mb-8 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
-        style={{ transitionDelay: animateIn ? '200ms' : '0ms' }}
-        >
-          <button
-            onClick={onClose}
-            className="text-black text-sm font-medium hover:text-gray-700 transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-110 flex items-center space-x-2"
-            aria-label="Close menu"
-          >
-            <span>CLOSE</span>
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* Main Navigation */}
-        <nav className={`mb-12 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-        style={{ transitionDelay: animateIn ? '300ms' : '0ms' }}
-        >
-          <ul className="space-y-6">
-            {menuItems.map((item, index) => (
-              <li key={item.id}>
-                <Link 
-                  href={item.href}
-                  className="text-black text-xl md:text-2xl font-medium hover:text-accent transition-all duration-300 block border-b border-gray-300 pb-4"
-                  onMouseEnter={() => setHoveredItemImage(item.imageSrc)}
-                  onMouseLeave={() => setHoveredItemImage(defaultImageSrc)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Locations Section */}
-        <div className={`mb-12 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-        style={{ transitionDelay: animateIn ? '400ms' : '0ms' }}
-        >
-          <h2 className="text-2xl md:text-3xl font-light text-secondary mb-8">
-            todo canto
-          </h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Recife Locations */}
-            <div>
-              <h3 className="text-xl font-medium text-black mb-4">RECIFE</h3>
-              <ul className="space-y-3">
-                {RECIFE_LOCATIONS.map((location) => (
-                  <li key={location.id}>
-                    <Link 
-                      href={location.href}
-                      className="text-gray-700 hover:text-accent transition-colors duration-300 text-sm font-light"
-                    >
-                      {location.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Other Regions */}
-            <div>
-              <h3 className="text-xl font-medium text-black mb-4">OUTRAS REGIÕES</h3>
-              <ul className="space-y-3">
-                {OTHER_REGIONS.map((location) => (
-                  <li key={location.id}>
-                    <Link 
-                      href={location.href}
-                      className="text-gray-700 hover:text-accent transition-colors duration-300 text-sm font-light"
-                    >
-                      {location.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0">
+            <motion.div
+              key={hoveredItemImage}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={hoveredItemImage}
+                alt="Hub Plural"
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
           </div>
-        </div>
 
-        {/* Social Media Icons */}
-        <div className={`mt-auto flex flex-col items-end space-y-4 transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-          animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-        style={{ transitionDelay: animateIn ? '500ms' : '0ms' }}
-        >
-          <Link 
-            href={contact.socialMedia.facebook || "https://facebook.com/hubplural"} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-black hover:text-accent transition-colors duration-300"
+          {/* Mobile Close Button - Top Right */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="absolute top-6 right-6 z-20 md:hidden"
           >
-            <Facebook size={24} />
-          </Link>
-          <Link 
-            href={contact.socialMedia.instagram || "https://instagram.com/hubplural"} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-black hover:text-accent transition-colors duration-300"
-          >
-            <Instagram size={24} />
-          </Link>
-          <Link 
-            href={contact.socialMedia.linkedin || "https://linkedin.com/company/hubplural"} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-black hover:text-accent transition-colors duration-300"
-          >
-            <Linkedin size={24} />
-          </Link>
-        </div>
-      </div>
-    </div>
+            <button
+              onClick={onClose}
+              className="w-12 h-12 rounded-full border border-white/30 bg-black/20 backdrop-blur-sm text-white hover:bg-white/10 transition-all duration-300 flex items-center justify-center group"
+              aria-label="Close menu"
+            >
+              <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+            </button>
+          </motion.div>
+
+          {/* Main Content */}
+          <div className="relative z-10 h-full flex flex-col md:flex-row">
+            
+            {/* Navigation Section - Full width on mobile */}
+            <motion.div
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -100, opacity: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="w-full md:w-3/5 lg:w-1/2 h-full flex flex-col justify-center p-6 md:p-12 lg:p-16 overflow-y-auto"
+            >
+              {/* Logo */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mb-12 md:mb-16 mt-4 md:mt-0"
+              >
+                <Link href="/" onClick={onClose} className="inline-block">
+                  <Image
+                    src="/hub-plural-logo-branca.png"
+                    alt="Hub Plural Logo"
+                    width={isMobile ? 180 : 220}
+                    height={isMobile ? 48 : 60}
+                    priority
+                  />
+                </Link>
+              </motion.div>
+
+              {/* Main Navigation */}
+              <nav className="space-y-1 md:space-y-2 mb-8 md:mb-0">
+                {menuItems.map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 + (index * 0.1) }}
+                    className="group"
+                  >
+                    <Link 
+                      href={item.href}
+                      onClick={onClose}
+                      className="flex items-center justify-between py-3 md:py-4 text-white hover:text-amber-400 transition-all duration-500 active:text-amber-400 touch-manipulation"
+                      onMouseEnter={() => !isMobile && setHoveredItemImage(item.imageSrc)}
+                      onMouseLeave={() => !isMobile && setHoveredItemImage(defaultImageSrc)}
+                      onTouchStart={() => isMobile && setHoveredItemImage(item.imageSrc)}
+                    >
+                      <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light tracking-tight">
+                        {item.label}
+                      </span>
+                      <ChevronRight 
+                        size={isMobile ? 20 : 24} 
+                        className="opacity-70 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 text-amber-400 flex-shrink-0 ml-4" 
+                      />
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Mobile Quick Actions */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                className="mt-8 md:mt-16 flex flex-col md:flex-row gap-4"
+              >
+                <button
+                  onClick={() => setActiveSection('services')}
+                  className={`px-6 py-3 rounded-full border border-white/30 text-white transition-all duration-300 hover:bg-white/10 active:bg-white/20 touch-manipulation ${
+                    activeSection === 'services' ? 'bg-amber-400 text-black border-amber-400' : ''
+                  }`}
+                >
+                  Serviços
+                </button>
+                <button
+                  onClick={() => setActiveSection('locations')}
+                  className={`px-6 py-3 rounded-full border border-white/30 text-white transition-all duration-300 hover:bg-white/10 active:bg-white/20 touch-manipulation ${
+                    activeSection === 'locations' ? 'bg-amber-400 text-black border-amber-400' : ''
+                  }`}
+                >
+                  Localizações
+                </button>
+              </motion.div>
+
+              {/* Mobile Dynamic Content */}
+              <div className="md:hidden mt-8">
+                <AnimatePresence mode="wait">
+                  {activeSection === 'services' && (
+                    <motion.div
+                      key="mobile-services"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4 }}
+                      className="space-y-4"
+                    >
+                      <h3 className="text-xl font-light text-white mb-6">Nossos Serviços</h3>
+                      {KEY_SERVICES.map((service, index) => (
+                        <motion.div
+                          key={service.id}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.4, delay: index * 0.1 }}
+                        >
+                          <Link
+                            href={service.href}
+                            onClick={onClose}
+                            className="block p-4 rounded-lg bg-white/10 hover:bg-white/20 active:bg-white/25 transition-all duration-300 text-white group touch-manipulation"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="text-base font-light">{service.label}</span>
+                              <ChevronRight size={16} className="transition-transform duration-300 text-amber-400" />
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+
+                  {activeSection === 'locations' && (
+                    <motion.div
+                      key="mobile-locations"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4 }}
+                      className="space-y-4"
+                    >
+                      <h3 className="text-xl font-light text-white mb-6">Nossas Unidades</h3>
+                      {KEY_LOCATIONS.map((location, index) => (
+                        <motion.div
+                          key={location.id}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.4, delay: index * 0.1 }}
+                        >
+                          <Link
+                            href={location.href}
+                            onClick={onClose}
+                            className="block p-4 rounded-lg bg-white/10 hover:bg-white/20 active:bg-white/25 transition-all duration-300 text-white group touch-manipulation"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <MapPin size={16} className="text-amber-400 flex-shrink-0" />
+                              <span className="text-base font-light">{location.label}</span>
+                              <ChevronRight size={16} className="ml-auto transition-transform duration-300 text-amber-400" />
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+            {/* Right Side - Desktop Only Dynamic Content */}
+            <motion.div
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 100, opacity: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+              className="hidden md:flex w-2/5 lg:w-1/2 h-full flex-col justify-center p-8 md:p-12 lg:p-16 bg-white/5 backdrop-blur-md"
+            >
+              {/* Desktop Close Button */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="absolute top-8 right-8"
+              >
+                <button
+                  onClick={onClose}
+                  className="w-12 h-12 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all duration-300 flex items-center justify-center group"
+                  aria-label="Close menu"
+                >
+                  <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
+                </button>
+              </motion.div>
+
+              {/* Desktop Dynamic Content */}
+              <AnimatePresence mode="wait">
+                {activeSection === 'services' && (
+                  <motion.div
+                    key="services"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="space-y-6"
+                  >
+                    <h3 className="text-2xl font-light text-white mb-8">Nossos Serviços</h3>
+                    {KEY_SERVICES.map((service, index) => (
+                      <motion.div
+                        key={service.id}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                      >
+                        <Link
+                          href={service.href}
+                          onClick={onClose}
+                          className="block p-4 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white group"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-lg font-light">{service.label}</span>
+                            <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+
+                {activeSection === 'locations' && (
+                  <motion.div
+                    key="locations"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="space-y-6"
+                  >
+                    <h3 className="text-2xl font-light text-white mb-8">Nossas Unidades</h3>
+                    {KEY_LOCATIONS.map((location, index) => (
+                      <motion.div
+                        key={location.id}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                      >
+                        <Link
+                          href={location.href}
+                          onClick={onClose}
+                          className="block p-4 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white group"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <MapPin size={16} className="text-amber-400" />
+                            <span className="text-lg font-light">{location.label}</span>
+                            <ChevronRight size={16} className="ml-auto group-hover:translate-x-1 transition-transform duration-300" />
+                          </div>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+
+                {activeSection === 'nav' && (
+                  <motion.div
+                    key="nav"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="space-y-8"
+                  >
+                    <div className="text-white/80">
+                      <h3 className="text-2xl font-light mb-4">Hub Plural</h3>
+                      <p className="text-lg font-light leading-relaxed mb-6">
+                        Espaços de trabalho colaborativo que inspiram inovação e conectam pessoas.
+                      </p>
+                      
+                      <div className="flex items-center space-x-3 text-amber-400 mb-4">
+                        <Clock size={16} />
+                        <span className="text-sm">Seg-Sex: 8h às 18h</span>
+                      </div>
+                      
+                      <Link
+                        href="/contato"
+                        onClick={onClose}
+                        className="inline-flex items-center space-x-2 text-amber-400 hover:text-white transition-colors duration-300"
+                      >
+                        <span>Agendar Visita</span>
+                        <ChevronRight size={16} />
+                      </Link>
+                    </div>
+
+                    {/* Social Links */}
+                    <div className="flex space-x-4 pt-8 border-t border-white/20">
+                      <Link 
+                        href={contact.socialMedia.facebook || "#"} 
+                        target="_blank"
+                        className="w-10 h-10 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
+                      >
+                        <span className="sr-only">Facebook</span>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                      </Link>
+                      <Link 
+                        href={contact.socialMedia.instagram || "#"} 
+                        target="_blank"
+                        className="w-10 h-10 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
+                      >
+                        <span className="sr-only">Instagram</span>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.348-1.051-2.348-2.348 0-1.297 1.051-2.348 2.348-2.348 1.297 0 2.348 1.051 2.348 2.348 0 1.297-1.051 2.348-2.348 2.348zm7.718 0c-1.297 0-2.348-1.051-2.348-2.348 0-1.297 1.051-2.348 2.348-2.348 1.297 0 2.348 1.051 2.348 2.348 0 1.297-1.051 2.348-2.348 2.348z"/>
+                        </svg>
+                      </Link>
+                      <Link 
+                        href={contact.socialMedia.linkedin || "#"} 
+                        target="_blank"
+                        className="w-10 h-10 rounded-full border border-white/30 text-white hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
+                      >
+                        <span className="sr-only">LinkedIn</span>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

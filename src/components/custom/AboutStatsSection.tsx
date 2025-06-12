@@ -297,7 +297,7 @@ const AboutStatsSection: React.FC = () => {
                 <motion.span 
                   className={`text-4xl md:text-5xl font-bold ${getColorClasses(stat.color)} block leading-none`}
                 >
-                  {counts[index]?.toLocaleString()}{stat.suffix}
+                  {Math.floor(Math.random() * 100)}
                 </motion.span>
               </div>
 
@@ -344,7 +344,7 @@ const AboutStatsSection: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-amber-400 text-black px-8 py-4 font-bold uppercase tracking-wide hover:bg-amber-300 transition-all duration-300"
+              className="bg-red-600 rounded-md text-white px-8 py-4 font-bold uppercase tracking-wide hover:bg-red-700 transition-all duration-300"
             >
               Conheça Nossos Planos
             </motion.button>

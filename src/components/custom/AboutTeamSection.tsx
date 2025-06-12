@@ -25,13 +25,13 @@ const teamMembers: TeamMember[] = [
     name: 'Carlos Eduardo Silva',
     position: 'CEO & Fundador',
     department: 'Liderança Executiva',
-    bio: 'Visionário por trás do Hub Plural, com mais de 15 anos de experiência em negócios inovadores e desenvolvimento urbano.',
+    bio: 'Visionário por trás do Hub Plural, com mais de 15 anos de experiência em negócios e desenvolvimento urbano.',
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
     social: {
       linkedin: 'https://linkedin.com/in/carlos-silva',
       email: 'carlos@hubplural.com'
     },
-    expertise: ['Estratégia Empresarial', 'Inovação', 'Liderança']
+    expertise: ['Empresarial', 'Inovação', 'Liderança']
   },
   {
     id: 'coo',
@@ -39,7 +39,7 @@ const teamMembers: TeamMember[] = [
     position: 'COO',
     department: 'Operações',
     bio: 'Especialista em operações e gestão de múltiplas unidades, garantindo excelência em todos os nossos espaços.',
-    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face',
+    image: 'https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     social: {
       linkedin: 'https://linkedin.com/in/ana-santos',
       email: 'ana@hubplural.com'
@@ -57,7 +57,7 @@ const teamMembers: TeamMember[] = [
       linkedin: 'https://linkedin.com/in/rafael-lima',
       email: 'rafael@hubplural.com'
     },
-    expertise: ['Tecnologia', 'Inovação Digital', 'Infraestrutura']
+    expertise: ['Tecnologia', 'Inovação', 'Infraestrutura']
   },
   {
     id: 'community',
@@ -96,7 +96,7 @@ const teamMembers: TeamMember[] = [
       linkedin: 'https://linkedin.com/in/mariana-costa',
       email: 'mariana@hubplural.com'
     },
-    expertise: ['Design de Interiores', 'Arquitetura', 'UX Espacial']
+    expertise: ['Arquitetura', 'UX Espacial']
   }
 ];
 

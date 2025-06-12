@@ -137,7 +137,7 @@ const AboutMissionSection: React.FC = () => {
                 whileHover={{ scale: 1.05, y: -10 }}
                 transition={{ duration: 0.3 }}
                 className={`
-                  relative p-8 md:p-10 bg-white border-2 transition-all duration-500 shadow-lg hover:shadow-2xl
+                  relative p-8 md:p-10 border-2 transition-all duration-500 shadow-lg hover:shadow-2xl bg-${item.color}-500 md:h-96 hover:cursor-pointer
                   ${getColorClasses(item.color, activeItem === item.id)}
                 `}
               >
@@ -180,51 +180,6 @@ const AboutMissionSection: React.FC = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Principles Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="bg-white p-8 md:p-12 shadow-lg"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-black uppercase tracking-wide mb-4">
-              Nossos Princípios Fundamentais
-            </h3>
-            <p className="text-neutral-600 font-light text-lg leading-relaxed max-w-3xl mx-auto">
-              Estes princípios orientam cada decisão que tomamos e cada serviço que oferecemos
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {principles.map((principle, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="text-center group"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-400 group-hover:text-white transition-all duration-300"
-                >
-                  {principle.icon}
-                </motion.div>
-                <h4 className="text-xl font-bold text-black uppercase tracking-wide mb-3">
-                  {principle.title}
-                </h4>
-                <p className="text-neutral-600 font-light leading-relaxed">
-                  {principle.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -16,43 +16,43 @@ interface ProjectImage {
 const projectImages: ProjectImage[] = [
   {
     id: '1',
-    backgroundUrl: 'https://lh3.googleusercontent.com/gg-dl/AJfQ9KTTf3psojldG9pkLxSjogqLiRJM3j0tWuTV89aZ2u4ucokssNKnR0kefUdEvyJUNjDJWKD3tRogdjruzQpXy31xWsp2xISDSgpAeCZE1-WzHat4WEBfm2ekaav05IFOBXPQf2LPKYyjL5aHawvkYEPhBqWdJGLp_vHQQ-ho5x2Lt0ebuQ=s1024',
-    centerUrl: 'https://lh3.googleusercontent.com/gg-dl/AJfQ9KRl9KlAwE9pkPECwEFkgO5NvYH0T8ZUf4K3anqINZ_LFgeg0Jv5JYsHQMqNVp4FEMbnxze6si7xw4WwpiEwYTvz2mbmTk5qfP1voYiG_4d5PnW_c0xcaDqbFDFcw1WQRJYYu3nknUyknMdm6uZ3eGO01fYlyRfG__BicKrXWXH_54bCQQ=s1024',
+    backgroundUrl: '/images/co-01.jpg',
+    centerUrl: '/images/co-01.jpg',
     title: 'RECIFE',
     subtitle: 'HUB PRA MIM'
   },
   {
     id: '2',
-    backgroundUrl: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-    centerUrl: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    backgroundUrl: '/images/co-2.jpg',
+    centerUrl: '/images/co-2.jpg',
     title: 'RECIFE',
     subtitle: 'HUB PRA 2 OU 6'
   },
   {
     id: '3',
-    backgroundUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-    centerUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    backgroundUrl: '/images/co-03.jpg',
+    centerUrl: '/images/co-03.jpg',
     title: 'RECIFE',
     subtitle: 'HUB PRA GENTE QUE SÓ'
   },
   {
     id: '4',
-    backgroundUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-    centerUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    backgroundUrl: '/images/co-04.jpg',
+    centerUrl: '/images/co-04.jpg',
     title: 'CARUARU',
     subtitle: 'HUB PRA MIM'
   },
   {
     id: '5',
-    backgroundUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-    centerUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    backgroundUrl: '/images/co-06.png',
+    centerUrl: '/images/co-06.png',
     title: 'FORTALEZA',
     subtitle: 'HUB PRA 2 OU 6'
   },
   {
     id: '6',
-    backgroundUrl: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-    centerUrl: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    backgroundUrl: '/images/co-07.png',
+    centerUrl: '/images/co-07.png',
     title: 'FORTALEZA',
     subtitle: 'HUB PRA GENTE QUE SÓ'
   }
@@ -215,11 +215,6 @@ const ProjectGallery: React.FC = () => {
             whileHover={{ scale: 1.2 }}
           />
         ))}
-      </div>
-
-      {/* Bottom Left Label */}
-      <div className="absolute bottom-8 left-8 z-20 text-white/50 text-xs tracking-wider">
-        PORTFOLIO SHOWCASE
       </div>
     </section>
   );

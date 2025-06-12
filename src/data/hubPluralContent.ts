@@ -73,11 +73,6 @@ export const hubPluralContent: ScrapedContent = {
       "icon": null
     },
     {
-      "title": "Membership",
-      "description": "Acesso completo às facilidades do Hub com benefícios exclusivos e networking qualificado.",
-      "icon": null
-    },
-    {
       "title": "Estação Fixa",
       "description": "Sua própria estação de trabalho em ambiente colaborativo, garantindo seu espaço sempre disponível.",
       "icon": null

@@ -67,7 +67,7 @@ export default function HeroSection() {
 
             {/* Text Content Block */}
             <div className="flex-grow max-w-4xl xl:max-w-5xl">
-              <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold uppercase leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-bold uppercase leading-tight tracking-tight">
                 A Maior rede de Coworking, Escritórios Flexíveis e Salas de Reunião em Recife
               </h1>
               <p className="mt-4 text-base sm:text-lg md:text-lg lg:text-xl font-light leading-relaxed">
@@ -76,7 +76,7 @@ export default function HeroSection() {
             </div>
 
             {/* Arrow Icon, aligned to the far right */}
-            <div className="ml-auto pl-4 md:pl-8">
+            <div className="hidden md:block md:ml-auto pl-4 md:pl-8">
               <ArrowIcon />
             </div>
           </div>

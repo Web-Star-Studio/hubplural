@@ -70,7 +70,7 @@ const MapboxSection: React.FC<MapboxSectionProps> = ({
     <section className="py-12 md:py-16 lg:py-20 bg-neutral-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 md:mb-12 text-neutral-800">
-          Our Location
+          Em todos os lugares
         </h2>
         {MAPBOX_ACCESS_TOKEN === 'YOUR_MAPBOX_ACCESS_TOKEN' && (
           <div className="text-center p-4 bg-red-100 text-red-700 rounded-md">

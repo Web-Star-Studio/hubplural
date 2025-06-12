@@ -270,50 +270,6 @@ const AboutValuesSection: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Culture Points */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="bg-neutral-900 text-white p-8 md:p-12"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-wide mb-4">
-              Nossa Cultura em Ação
-            </h3>
-            <p className="text-neutral-300 font-light text-lg leading-relaxed max-w-3xl mx-auto">
-              Estes são os pilares que sustentam nossa cultura organizacional e definem como trabalhamos juntos
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {culturePoints.map((point, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center group"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-16 h-16 bg-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white group-hover:text-amber-400 transition-all duration-300"
-                >
-                  {point.icon}
-                </motion.div>
-                <h4 className="text-xl font-bold uppercase tracking-wide mb-3">
-                  {point.title}
-                </h4>
-                <p className="text-neutral-300 font-light leading-relaxed text-sm">
-                  {point.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

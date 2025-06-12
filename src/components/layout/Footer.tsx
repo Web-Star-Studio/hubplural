@@ -77,12 +77,12 @@ const Footer: React.FC = () => {
                   <Image
                     src="/hub-plural-logo-preta.png"
                     alt="Hub Plural Logo"
-                    width={200}
-                    height={52}
-                    className="h-24 w-auto"
+                    width={1536}
+                    height={1024}
+                    className="h-48 w-auto md:absolute md:bottom-64"
                   />
                 </div>
-                <p className="text-neutral-600 leading-relaxed max-w-sm">
+                <p className="text-neutral-600 leading-relaxed md:mt-16 max-w-sm">
                   Conectando pessoas, ideias e negócios no futuro do trabalho.
                 </p>
               </motion.div>
@@ -93,7 +93,7 @@ const Footer: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="space-y-3"
+                className="space-y-3 "
               >
                 {contactInfo.map((contact, index) => (
                   <div key={index} className="flex items-center space-x-3">
