@@ -2,6 +2,16 @@
 
 import { motion } from 'framer-motion';
 import { Dot, Mouse } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+
+// Background images for About section
+const backgroundImages = [
+  '/images/co-01.jpg',
+  '/images/co-03.jpg', 
+  '/images/co-5.jpg',
+  'https://hubplural.com/wp-content/uploads/2023/01/BANNER_SOBRE-1024x770.png'
+];
 
 const ScrollDownIcon = () => (
   <motion.div 
@@ -34,19 +44,57 @@ const ArrowIcon = () => (
 );
 
 export default function AboutHeroSection() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Background rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
+    }, isMobile ? 8000 : 6000);
+    return () => clearInterval(interval);
+  }, [isMobile]);
+
   return (
     <div className="relative w-full h-screen text-white overflow-hidden">
-      {/* Background Image */}
+      {/* Dynamic Background */}
       <div className="absolute inset-0">
-        <img
-          src="https://hubplural.com/wp-content/uploads/2023/01/BANNER_SOBRE-1024x770.png"
-          alt="Hub Plural - Sobre Nós"
-          className="w-full h-full object-cover object-center"
-        />
+        {backgroundImages.map((img, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: index === currentImageIndex ? 1 : 0
+            }}
+            transition={{ duration: isMobile ? 2.5 : 2, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={img}
+              alt="Hub Plural - Sobre Nós"
+              fill
+              className="object-cover object-center"
+              priority={index === 0}
+              sizes="100vw"
+              quality={isMobile ? 85 : 95}
+            />
+          </motion.div>
+        ))}
+        
+        {/* Enhanced gradient overlay for better mobile readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/60 to-black/75 md:from-black/65 md:via-black/45 md:to-black/65" />
       </div>
-      
-      {/* Enhanced gradient overlay for better mobile readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 md:from-black/60 md:via-black/40 md:to-black/60"></div>
 
       {/* Content container */}
       <div className="relative z-10 flex flex-col justify-between h-full p-4 sm:p-6 md:p-8 lg:p-16">
@@ -70,7 +118,7 @@ export default function AboutHeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-xs sm:text-sm font-light tracking-[0.2em] text-white/80 mb-4 md:mb-6 uppercase"
+                className="text-xs sm:text-sm font-light tracking-[0.2em] text-amber-400 mb-4 md:mb-6 uppercase"
               >
                 Sobre o Hub Plural
               </motion.div>
@@ -83,7 +131,7 @@ export default function AboutHeroSection() {
               >
                 Transformando Espaços,
                 <br />
-                <span className="text-white/90">Conectando Pessoas</span>
+                <span className="text-amber-400">Conectando Pessoas</span>
               </motion.h1>
 
               <motion.p 

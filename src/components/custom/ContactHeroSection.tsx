@@ -89,7 +89,7 @@ export default function ContactHeroSection() {
           <div className="max-w-4xl mx-auto text-center md:text-left">
             
             {/* Header Spacer for mobile */}
-            <div className="h-48 md:h-24"></div>
+            <div className="h-48 md:h-48"></div>
             
             {/* Pre-title */}
             <motion.div

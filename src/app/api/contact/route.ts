@@ -325,7 +325,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Log the submission
-    logContactSubmission(formData, ip, userAgent);
+    logContactSubmission(formData, ip, userAgent || undefined);
 
     // TODO: Replace with actual email sending logic
     // Example integrations you could add here:

@@ -41,14 +41,14 @@ const getLocationId = (locationName: string): string => {
   return nameToIdMap[locationName] || locationName.toLowerCase().replace(/\s+/g, '-');
 };
 
-const MapboxSection: React.FC = () => {
+const LocationsMap: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
   const router = useRouter();
 
-  const handleExploreLocation = () => {
+  const handleViewDetails = () => {
     if (selectedLocation) {
       const locationId = getLocationId(selectedLocation.name);
       router.push(`/localizacao/${locationId}`);
@@ -187,7 +187,7 @@ const MapboxSection: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-bold text-neutral-800 mb-4"
           >
-            em todos os lugares
+            mapa interativo
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -195,7 +195,7 @@ const MapboxSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl text-neutral-600 max-w-2xl mx-auto"
           >
-            Estamos presentes em diversas cidades para estar sempre perto de você
+            Clique nos pontos para explorar nossas unidades
           </motion.p>
         </div>
 
@@ -250,19 +250,19 @@ const MapboxSection: React.FC = () => {
                   </div>
                   <p className="text-neutral-600 mb-6">{selectedLocation.address}</p>
                   <button
-                    onClick={handleExploreLocation}
+                    onClick={handleViewDetails}
                     className="w-full bg-neutral-900 text-white py-3 px-6 rounded-xl font-medium hover:bg-neutral-800 transition-colors"
                   >
-                    Explorar Unidade
+                    Ver Detalhes
                   </button>
                 </div>
               ) : (
                 <div className="bg-white rounded-2xl p-6 shadow-lg border border-neutral-200">
                   <h3 className="text-xl font-bold text-neutral-800 mb-4">
-                    Nossas Unidades
+                    Selecione uma localização
                   </h3>
                   <p className="text-neutral-600 mb-6">
-                    Clique em qualquer ponto no mapa para conhecer nossas unidades espalhadas pelo Nordeste.
+                    Clique em qualquer ponto no mapa para ver mais informações sobre nossa unidade.
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-sm">
@@ -288,4 +288,4 @@ const MapboxSection: React.FC = () => {
   );
 };
 
-export default MapboxSection; 
+export default LocationsMap; 

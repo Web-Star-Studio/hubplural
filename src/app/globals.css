@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Blog-specific utilities */
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
 /* @import "tw-animate-css"; */ /* Keep this commented for now */
 
 /* All other custom @theme, :root, .dark, @layer base styles will be temporarily commented out for testing */
