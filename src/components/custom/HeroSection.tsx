@@ -47,7 +47,7 @@ export default function HeroSection() {
         {/* The outer div handles bottom positioning via justify-between on parent and flex-col */}
         <div className="flex flex-col justify-end h-full">
           {/* This row contains the spacer, text, and arrow */}
-          <div className="flex items-end w-full">
+          <div className="flex items-end w-full mb-16 md:mb-8">
             {/* Spacer to push text away from left edge / scroll indicator.
                 Scroll indicator is left-8 (2rem from p-8 edge) / left-16 (4rem from p-16 edge).
                 Icon width is w-8 (2rem).

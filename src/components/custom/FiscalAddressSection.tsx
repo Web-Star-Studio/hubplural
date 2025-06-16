@@ -129,7 +129,7 @@ const FiscalAddressSection: React.FC = () => {
               {/* Image */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
                 <Image
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  src="/images/RECIFE-ANTIGO-01-1024x770.png"
                   alt="Modern office building representing fiscal address locations"
                   width={600}
                   height={400}
