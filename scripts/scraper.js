@@ -61,10 +61,14 @@ async function scrapeHubPlural() {
         $('img').each((index, element) => {
             const src = $(element).attr('src') || $(element).attr('data-src');
             const alt = $(element).attr('alt') || '';
-            
+
             if (src && !src.includes('logo') && (src.includes('hub') || alt.toLowerCase().includes('coworking'))) {
+                let finalSrc = src;
+                if (!src.startsWith('http') && !src.startsWith('data:')) {
+                    finalSrc = `https://hubplural.com${src}`;
+                }
                 scrapedData.hero.images.push({
-                    src: src.startsWith('http') ? src : `https://hubplural.com${src}`,
+                    src: finalSrc,
                     alt: alt
                 });
             }

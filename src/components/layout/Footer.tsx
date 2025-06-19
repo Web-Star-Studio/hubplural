@@ -95,12 +95,15 @@ const Footer: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="space-y-3 "
               >
-                {contactInfo.map((contact, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <contact.icon className="w-4 h-4 text-neutral-400 flex-shrink-0" />
-                    <span className="text-sm text-neutral-600">{contact.text}</span>
-                  </div>
-                ))}
+                {contactInfo.map((contact, index) => {
+                  const Icon = contact.icon;
+                  return (
+                    <div key={index} className="flex items-center space-x-3">
+                      <Icon className="w-4 h-4 text-neutral-400 flex-shrink-0" />
+                      <span className="text-sm text-neutral-600">{contact.text}</span>
+                    </div>
+                  );
+                })}
               </motion.div>
             </div>
 
